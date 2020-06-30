@@ -93,13 +93,18 @@ void CheckNextObjectAndMerge(ObjectsAtSubLayerIterator &jt, const ObjectsAtSubLa
 	}
 }
 
-void ProcessObjects(const ObjectsAtSubLayerIterator &ooSameLayerBegin, const ObjectsAtSubLayerIterator &ooSameLayerEnd, 
+void ProcessObjects(const std::vector<OutputObjectRef> &data, 
 	class SharedData *sharedData, double simplifyLevel, unsigned zoom, const TileBbox &bbox,
-	vector_tile::Tile_Layer *vtLayer, vector<string> &keyList, vector<vector_tile::Tile_Value> &valueList) {
+	vector_tile::Tile_Layer *vtLayer, vector<string> &keyList, vector<vector_tile::Tile_Value> &valueList,
+	unsigned layerNum) {
 
-	for (ObjectsAtSubLayerIterator jt = ooSameLayerBegin; jt != ooSameLayerEnd; ++jt) {
+	std::unordered_set<OutputObjectRef> alreadyWritten;
+	for (auto jt = data.begin(); jt != data.end(); ++jt) {
 		OutputObjectRef oo = *jt;
 		if (zoom < oo->minZoom) { continue; }
+		if (oo->layer != layerNum) { continue; }
+		if (alreadyWritten.count(oo)>0) { continue; }
+		alreadyWritten.insert(oo);
 
 		if (oo->geomType == POINT) {
 			vector_tile::Tile_Feature *featurePtr = vtLayer->add_features();
@@ -122,10 +127,10 @@ void ProcessObjects(const ObjectsAtSubLayerIterator &ooSameLayerBegin, const Obj
 			}
 
 			//This may increment the jt iterator
-			if(sharedData->config.combineSimilarObjs) {
-				CheckNextObjectAndMerge(jt, ooSameLayerEnd, bbox, g);
-				oo = *jt;
-			}
+//			if(sharedData->config.combineSimilarObjs) {
+//				CheckNextObjectAndMerge(jt, ooSameLayerEnd, bbox, g);
+//				oo = *jt;
+//			}
 
 			vector_tile::Tile_Feature *featurePtr = vtLayer->add_features();
 			WriteGeometryVisitor w(&bbox, featurePtr, simplifyLevel);
@@ -166,10 +171,10 @@ void ProcessLayer(uint zoom, const TilesAtZoomIterator &it, vector_tile::Tile &t
 			simplifyLevel *= pow(ld.simplifyRatio, (ld.simplifyBelow-1) - zoom);
 		}
 
-		ObjectsAtSubLayerConstItPair ooListSameLayer = it.GetObjectsAtSubLayer(layerNum);
+		// ObjectsAtSubLayerConstItPair ooListSameLayer = it.GetObjectsAtSubLayer(layerNum);
 		// Loop through output objects
-		ProcessObjects(ooListSameLayer.first, ooListSameLayer.second, sharedData, 
-			simplifyLevel, zoom, bbox, vtLayer, keyList, valueList);
+		ProcessObjects(it.data, sharedData, 
+			simplifyLevel, zoom, bbox, vtLayer, keyList, valueList, layerNum);
 	}
 
 	// If there are any objects, then add tags

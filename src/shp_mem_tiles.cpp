@@ -145,4 +145,3 @@ void ShpMemTiles::addToTileIndexPolyline(OutputObjectRef &oo, TileIndex &tileInd
 		lastx=tilex; lasty=tiley;
 	}
 }
-

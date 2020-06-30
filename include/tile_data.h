@@ -76,7 +76,7 @@ public:
 	TilesAtZoomIterator& operator--();
 	TilesAtZoomIterator operator--(int a);
 
-private:
+//private:
 	void RefreshData();
 
 	class TileData &tileData;

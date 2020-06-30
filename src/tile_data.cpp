@@ -119,8 +119,8 @@ void TilesAtZoomIterator::RefreshData() {
 	for(size_t i=0; i<tileData.sources.size(); i++)
 		tileData.sources[i]->MergeSingleTileDataAtZoom(*it, zoom, data);
 
-	sort(data.begin(), data.end());
-	data.erase(unique(data.begin(), data.end()), data.end());
+//	sort(data.begin(), data.end());
+//	data.erase(unique(data.begin(), data.end()), data.end());
 }
 
 // *********************************
