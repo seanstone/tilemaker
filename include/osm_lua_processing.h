@@ -115,6 +115,7 @@ public:
 	void AttributeNumeric(const std::string &key, const float val);
 	void AttributeBoolean(const std::string &key, const bool val);
 	void MinZoom(const unsigned z);
+	void AttributesFromTags();
 
 	// ----	vector_layers metadata entry
 
