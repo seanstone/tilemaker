@@ -86,8 +86,8 @@ public:
 	// Get an OSM tag for a given key (or return empty string if none)
 	std::string Find(const std::string& key) const;
 
-	// Get all OSM keys for the current object
-	std::vector<std::string> Keys() const;
+	// Get all OSM tags for the current object
+	std::map<std::string, std::string> Tags() const;
 
 	// ----	Spatial queries called from Lua
 
