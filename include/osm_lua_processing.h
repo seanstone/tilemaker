@@ -86,6 +86,9 @@ public:
 	// Get an OSM tag for a given key (or return empty string if none)
 	std::string Find(const std::string& key) const;
 
+	// Get all OSM keys for the current object
+	std::vector<std::string> Keys() const;
+
 	// ----	Spatial queries called from Lua
 
 	// Find intersecting shapefile layer

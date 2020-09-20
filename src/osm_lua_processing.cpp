@@ -38,6 +38,7 @@ OsmLuaProcessing::OsmLuaProcessing(const class Config &configIn, class LayerDefi
 		.addFunction("Id", &OsmLuaProcessing::Id)
 		.addFunction("Holds", &OsmLuaProcessing::Holds)
 		.addFunction("Find", &OsmLuaProcessing::Find)
+		.addFunction("Keys", &OsmLuaProcessing::Keys)
 		.addFunction("FindIntersecting", &OsmLuaProcessing::FindIntersecting)
 		.addFunction("Intersects", &OsmLuaProcessing::Intersects)
 		.addFunction("IsClosed", &OsmLuaProcessing::IsClosed)
@@ -104,6 +105,14 @@ string OsmLuaProcessing::Find(const string& key) const {
 	auto it = currentTags.find(key);
 	if(it == currentTags.end()) return "";
 	return it->second;
+}
+
+vector<string> OsmLuaProcessing::Keys() const {
+	vector<string> retval;
+  	for (auto const& element : currentTags) {
+    	retval.push_back(element.first);
+  	}
+  	return retval;
 }
 
 // ----	Spatial queries called from Lua
