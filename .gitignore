@@ -15,3 +15,5 @@ include/osmformat.pb.cc
 include/vector_tile.pb.cc
 
 docs/
+
+*.tmp
