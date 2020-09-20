@@ -8,8 +8,10 @@ tilemaker
 # vagrant local stuff
 .vagrant/
 
-# protocol buffers generated headers
+# protocol buffers generated files
 include/osmformat.pb.h
 include/vector_tile.pb.h
+include/osmformat.pb.cc
+include/vector_tile.pb.cc
 
 docs/
