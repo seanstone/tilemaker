@@ -303,8 +303,10 @@ private:
 	template<class PointRange, class NodeIt>
 	void fillPoints(PointRange &points, NodeList<NodeIt> nodeList) const {
 		for (auto it = nodeList.begin; it != nodeList.end; ++it) {
-			LatpLon ll = nodes.at(*it);
-			geom::range::push_back(points, geom::make<Point>(ll.lon/10000000.0, ll.latp/10000000.0));
+			try {
+				LatpLon ll = nodes.at(*it);
+				geom::range::push_back(points, geom::make<Point>(ll.lon/10000000.0, ll.latp/10000000.0));
+			} catch (...) {}
 		}
 	}
 
@@ -312,8 +314,10 @@ private:
 	template<class PointRange>
 	void fillPoints(PointRange &points, NodeVec nodeList) const {
 		for (auto it = nodeList.begin(); it != nodeList.end(); ++it) {
-			LatpLon ll = nodes.at(*it);
-			geom::range::push_back(points, geom::make<Point>(ll.lon/10000000.0, ll.latp/10000000.0));
+			try {
+				LatpLon ll = nodes.at(*it);
+				geom::range::push_back(points, geom::make<Point>(ll.lon/10000000.0, ll.latp/10000000.0));
+			} catch (...) {}
 		}
 	}
 };
