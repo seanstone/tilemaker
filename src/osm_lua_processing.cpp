@@ -347,7 +347,7 @@ void OsmLuaProcessing::LayerAsCentroid(const string &layerName) {
 // Set attributes in a vector tile's Attributes table
 void OsmLuaProcessing::Attribute(const string &key, const string &val) {
 	if (val.size()==0) { return; }		// don't set empty strings
-	if (outputs.size()==0) { cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
+	if (outputs.size()==0) { if (verbose) cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
 	vector_tile::Tile_Value v;
 	v.set_string_value(val);
 	unsigned attrIndex = attributeStore.indexForPair(key,v,false);
@@ -356,7 +356,7 @@ void OsmLuaProcessing::Attribute(const string &key, const string &val) {
 }
 
 void OsmLuaProcessing::AttributeNumeric(const string &key, const float val) {
-	if (outputs.size()==0) { cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
+	if (outputs.size()==0) { if (verbose) cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
 	vector_tile::Tile_Value v;
 	v.set_float_value(val);
 	unsigned attrIndex = attributeStore.indexForPair(key,v,false);
@@ -365,7 +365,7 @@ void OsmLuaProcessing::AttributeNumeric(const string &key, const float val) {
 }
 
 void OsmLuaProcessing::AttributeBoolean(const string &key, const bool val) {
-	if (outputs.size()==0) { cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
+	if (outputs.size()==0) { if (verbose) cerr << "Can't add Attribute " << key << " if no Layer set" << endl; return; }
 	vector_tile::Tile_Value v;
 	v.set_bool_value(val);
 	unsigned attrIndex = attributeStore.indexForPair(key,v,false);
@@ -375,7 +375,7 @@ void OsmLuaProcessing::AttributeBoolean(const string &key, const bool val) {
 
 // Set minimum zoom
 void OsmLuaProcessing::MinZoom(const unsigned z) {
-	if (outputs.size()==0) { cerr << "Can't set minimum zoom if no Layer set" << endl; return; }
+	if (outputs.size()==0) { if (verbose) cerr << "Can't set minimum zoom if no Layer set" << endl; return; }
 	outputs[outputs.size()-1]->setMinZoom(z);
 }
 
